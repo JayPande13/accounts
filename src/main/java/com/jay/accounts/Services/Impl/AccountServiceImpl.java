@@ -38,8 +38,6 @@ public class AccountServiceImpl implements IAccountsService {
         customerRepository.findByMobileNumber(customer.getMobileNumber()).ifPresent((foundCustomer) -> {
             throw new CustomerAlreadyExistsException("Customer Already Present With This Mobile Number " + foundCustomer.getMobileNumber());
         });
-        customer.setCreatedBy("Admin");
-        customer.setCreatedAt(LocalDateTime.now());
 
         Customer savedCustomer = customerRepository.save(customer);
         accountsRepository.save(createNewAccount(savedCustomer));
@@ -56,6 +54,37 @@ public class AccountServiceImpl implements IAccountsService {
         return returningCustomerDto;
     }
 
+    @Override
+    public boolean updateAccount(CustomerDto customerDto) {
+        Boolean isUpdate = false;
+        AccountsDto accountsDto = customerDto.getAccountsDto();
+        if (accountsDto != null) {
+            Accounts accounts = accountsRepository.findById(accountsDto.getAccountNumber()).orElseThrow(() -> new ResourceNotFoundException("Account", "Account Number", accountsDto.getAccountNumber().toString()));
+
+            AccountsMapper.mapToAccounts(accountsDto, accounts);
+            accounts = accountsRepository.save(accounts);
+
+            Long customerId = accounts.getCustomerId();
+            Customer customer = customerRepository.findById(customerId).orElseThrow(()-> new ResourceNotFoundException("Customer" ,"Customer ID" , customerId.toString()));
+
+            CustomerMapper.mapToCustomer(customerDto,customer);
+            customer = customerRepository.save(customer);
+            isUpdate =true;
+
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean deleteAccount(String mobileNumber) {
+        Customer fetchedCustomer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+
+        accountsRepository.deleteByCustomerId(fetchedCustomer.getCustomerId());
+        customerRepository.deleteById(fetchedCustomer.getCustomerId());
+
+        return true;
+    }
+
     private Accounts createNewAccount(Customer customer) {
         Accounts returningAccount = new Accounts();
         returningAccount.setCustomerId(customer.getCustomerId());
@@ -63,8 +92,6 @@ public class AccountServiceImpl implements IAccountsService {
         returningAccount.setAccountNumber(randomAccNumber);
         returningAccount.setAccountType(AccountsConstants.SAVINGS);
         returningAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        returningAccount.setCreatedAt(LocalDateTime.now());
-        returningAccount.setCreatedBy("Admin");
         return returningAccount;
     }
 }
