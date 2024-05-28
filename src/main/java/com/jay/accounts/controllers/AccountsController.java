@@ -51,6 +51,22 @@ public class AccountsController {
 
     }
 
+    @Operation(
+            description = "API for fetching Account",
+            summary = "on Hitting this API with mobile number and you will get Account Details"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Account Fetched Successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Account not fetched",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
+            )
+
+    })
 
     @GetMapping("fetch")
     public ResponseEntity<CustomerDto> fetchAccountDetails(@Pattern(regexp = "^$|[0-9]{10}", message = "Mobile Number must be 10 digits") @RequestParam String mobileNumber) {
