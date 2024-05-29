@@ -53,7 +53,7 @@ public class AccountsController {
 
     @Operation(
             description = "API for fetching Account",
-            summary = "on Hitting this API with mobile number and you will get Account Details"
+            summary = "Fetch Account API"
     )
     @ApiResponses({
             @ApiResponse(
