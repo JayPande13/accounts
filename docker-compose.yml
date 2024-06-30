@@ -1,0 +1,38 @@
+services:
+  accounts:
+    image: "jaypande13/accounts:v0.0.1"
+    container_name: accounts-ms
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - gringotts
+  loans:
+    image: "jaypande13/loans:v0.0.1"
+    container_name: loans-ms
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - gringotts
+  cards:
+    image: "jaypande13/cards:v0.0.1"
+    container_name: cards-ms
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - gringotts
+
+networks:
+  gringotts:
+    driver: bridge
