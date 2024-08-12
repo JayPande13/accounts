@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+
+build:
+  version: "1.0prod"
+
+accounts:
+  message: "Welcome to Account Related local API's"
+  contactDetails:
+    name: "Manager"
+    email: "manager@gmail.com"
+  support:
+    - (+91) 867746378

@@ -19,6 +19,25 @@ spring:
       ddl-auto: update
     show-sql: true
     defer-datasource-initialization: true
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active:
+     - "qa"  # enter profile you want to activate
+
+build:
+  version: "1.0"
+
+accounts:
+  message: "Welcome to Account Related local API's"
+  contactDetails:
+    name: "Jay Pande - Developer"
+    email: "jmaypande@gmail.com"
+  support:
+    - (+91) 7351733644
+
 
 #springdoc:
 #  swagger-ui:

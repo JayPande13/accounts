@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "1.0qa"
+
+accounts:
+  message: "Welcome to Account Related Prod API's"
+  contactDetails:
+    name: "Chapri QA"
+    email: "faltukaam@gmail.com"
+  support:
+    - (+91) 999999999
