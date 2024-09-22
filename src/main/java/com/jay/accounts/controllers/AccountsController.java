@@ -42,12 +42,13 @@ public class AccountsController {
     @Autowired
     private AccountControlInfoDto accountControlInfoDto;
 
+    private final IAccountsService iAccountsService;
+
     public AccountsController(IAccountsService iAccountsService){
         this.iAccountsService= iAccountsService;
     }
 
 
-    private final IAccountsService iAccountsService;
 
     @Operation(
             summary = "Create Account API",
@@ -223,7 +224,7 @@ public class AccountsController {
     )
     @GetMapping("/envVariables")
     public ResponseEntity<String> getEnvironmentDetails(){
-        return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("MAVEN_HOMES"));
+        return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
     }
 
     @Operation(
