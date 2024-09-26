@@ -5,11 +5,11 @@ spring:
   application:
     name: "accounts"
   profiles:
-    active: prod
+    active: "qa"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
-    username: sa
+    username: saf
     password: ""
   h2:
     console:
@@ -22,11 +22,22 @@ spring:
     defer-datasource-initialization: true
   config:
     import: "optional:configserver:http://localhost:8071/"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
 
 #  config:
-#    import:
+#    import:f
 #      - "application_qa.yml"
 #      - "application_prod.yml"
 #  profiles:
@@ -48,3 +59,4 @@ spring:
 #springdoc:
 #  swagger-ui:
 #    path:
+
